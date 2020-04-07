@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
         rvHeroes.setLayoutManager(new LinearLayoutManager(this));
         ListHeroAdapter listHeroAdapter = new ListHeroAdapter(list);
         rvHeroes.setAdapter(listHeroAdapter);
+
+        listHeroAdapter.setOnItemClickCallback(new ListHeroAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(Hero data) {
+                showSelectedHero(data);
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -68,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
         rvHeroes.setLayoutManager(new GridLayoutManager(this, 2));
         GridHeroAdapter gridHeroAdapter = new GridHeroAdapter(list);
         rvHeroes.setAdapter(gridHeroAdapter);
+
+        gridHeroAdapter.setOnItemClickCallback(new GridHeroAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(Hero data) {
+                showSelectedHero(data);
+            }
+        });
     }
 
     private void showRecyclerCardView(){
@@ -79,5 +94,8 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(title);
         }
+    }
+    private void showSelectedHero(Hero hero){
+        Toast.makeText(this, "Kamu memilih " + hero.getName(), Toast.LENGTH_SHORT).show();
     }
 }
